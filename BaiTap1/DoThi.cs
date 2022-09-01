@@ -55,7 +55,7 @@ namespace BaiTap1
                     return false;
             return true;
         }
-        public int[] TinhBacCacDinh()
+        public int[] TinhBacCacDinhVoHuong()
         {
             int[] bacCuaCacDinh = new int[soDinh];
             for(var i = 0; i < soDinh; i++)
@@ -75,9 +75,28 @@ namespace BaiTap1
             }
             return bacCuaCacDinh;
         }
+        public int[,] TinhBacCacDinhCoHuong()
+        {
+            var bacCuaCacDinh = new int[soDinh, 2];
+            for (var i = 0; i < soDinh; i++)
+            {
+                int bacRa = 0;
+                int bacVao = 0;
+                for(var j = 0; j < soDinh; j++)
+                {
+                    if (maTran[i, j] > 0)
+                        bacRa ++;
+                        if (maTran[j, i] > 0)
+                            bacVao++;
+                }
+                bacCuaCacDinh[i, 1] = bacRa;
+                bacCuaCacDinh[i, 0] = bacVao;
+            }
+            return bacCuaCacDinh;
+        }
         public int DemSoLuongDinhCoLap()
         {
-            var danhSachBacCacDinh = TinhBacCacDinh();
+            var danhSachBacCacDinh = TinhBacCacDinhVoHuong();
             var dem = 0;
             foreach(var item in danhSachBacCacDinh)
             {
