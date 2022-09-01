@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BaiTap1
 {
-    public class MaTranKe
+    public class DoThi
     {
         public int soDinh { get; set; }
         public int[,] maTran { get; set; }
