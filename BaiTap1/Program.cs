@@ -9,9 +9,11 @@ namespace BaiTap1
         {
             var doThi = new DoThi();
             await doThi.DocFileAsync("../../../input.txt");
-            Cau1a(doThi);
-            Cau1e(doThi);
-            Cau1g(doThi);
+            //Cau1a(doThi);
+            //Cau1e(doThi);
+            //Cau1f(doThi);
+            //Cau1g(doThi);
+            Cau2c(doThi);
             Console.ReadKey();
         }
         
@@ -51,14 +53,45 @@ namespace BaiTap1
         }
         static void Cau1f(DoThi doThi)
         {
-            //Code
+            int soDinhCoLap = 0;
+            int soDinhTreo = 0;
+            if (doThi.KiemTraMaTranDoiXung())
+            {
+                foreach(var item in doThi.TinhBacCacDinhVoHuong())
+                {
+                    if (item == 1)
+                        soDinhCoLap++;
+                }
+                soDinhCoLap = doThi.DemSoLuongDinhCoLap();
+            }
+            else
+            {
+                var bacCuaCacDinh = doThi.TinhBacCacDinhCoHuong();
+               
+                for(var i = 0; i< doThi.soDinh; i++)
+                {
+                    if (bacCuaCacDinh[i, 0] == 0 && bacCuaCacDinh[i, 1] == 0)
+                        soDinhCoLap++;
+                    if ((bacCuaCacDinh[i, 0] == 1 && bacCuaCacDinh[i, 1] == 0) || (bacCuaCacDinh[i, 0] == 0 && bacCuaCacDinh[i, 1] == 1))
+                        soDinhTreo++;
+                }
+            }
+            Console.WriteLine("So dinh treo: {0}", soDinhTreo);
+            Console.WriteLine("So dinh co lap: {0}", soDinhCoLap);
         }
         static void Cau1g(DoThi doThi)
         {
             
             if (doThi.KiemTraMaTranDoiXung())
             {
-
+                var result = "Bac cua tung dinh: ";
+                var danhSachBacCuaCacDinh = doThi.TinhBacCacDinhVoHuong();
+                for (var i = 0; i < danhSachBacCuaCacDinh.Length; i++)
+                {
+                    result += $"{i}({danhSachBacCuaCacDinh[i]}) ";
+                }
+                result.Remove(result.Length - 1);
+                Console.WriteLine(result);
             }
             else
             {
@@ -74,7 +107,47 @@ namespace BaiTap1
         }
         static void Cau1h(DoThi doThi)
         {
-            //Code
+            if (doThi.KiemTraMaTranDoiXung())
+            {
+                if (doThi.KiemTraCoChuaCanhKhuyen())
+                {
+                    Console.WriteLine("Gia do thi");
+                    return;
+                }
+                int soCapDinhXuatHienCanhBoi = 0;
+                for (var i = 0; i < doThi.soDinh; i++)
+                {
+                    for (var j = i + 1; j < doThi.soDinh; j++)
+                    {
+                        if (doThi.maTran[i, j] == doThi.maTran[j, j])
+                            soCapDinhXuatHienCanhBoi++;
+                    }
+                }
+                if (soCapDinhXuatHienCanhBoi > 0)
+                {
+                    Console.WriteLine("Da do thi");
+                    return;
+                }
+                Console.WriteLine("Don do thi");
+            }
+            else
+            {
+                int soCapDinhXuatHienCanhBoi = 0;              
+                for (var i = 0; i < doThi.soDinh; i++)
+                {                   
+                    for (var j = i + 1; j < doThi.soDinh; j++)
+                    {
+                        if (doThi.maTran[i, j] == doThi.maTran[j, j])
+                            soCapDinhXuatHienCanhBoi++;
+                    }
+                }
+                if (soCapDinhXuatHienCanhBoi > 0)
+                {
+                    Console.WriteLine("Da do thi co huong");
+                    return;
+                }
+                Console.WriteLine("Do thi co huong");
+            }
         }
         static void Cau2a(DoThi doThi)
         {
@@ -82,11 +155,38 @@ namespace BaiTap1
         }
         static void Cau2b(DoThi doThi)
         {
-            //Code
+            var danhSachBacCuaCacDinh = doThi.TinhBacCacDinhVoHuong();
+            var bacDinhDauTien = danhSachBacCuaCacDinh[0];
+            for(var i = 1; i< danhSachBacCuaCacDinh.Length; i++)
+            {
+                if(bacDinhDauTien != danhSachBacCuaCacDinh[i])
+                {
+                    Console.WriteLine("Day khong phai la do thi chinh quy.");
+                    return;
+                }    
+            }
+            Console.WriteLine("Day la do thi {0}-chinh quy", bacDinhDauTien);
         }
         static void Cau2c(DoThi doThi)
         {
-            //Code
+            for(var i = 0; i < doThi.soDinh; i++)
+            {
+                for(var j = 0; j < doThi.soDinh; j++)
+                {
+                    if(doThi.maTran[i, j] > 0)
+                    {
+                        for (var k = 0; k < doThi.soDinh; k++)
+                        {
+                            if (k != i && doThi.maTran[j, k] > 0 && doThi.maTran[k, i] > 0)
+                            {
+                                Console.WriteLine("Day khong phai la do thi vong");
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            Console.WriteLine($"Day la do thi vong C{doThi.soDinh}");
         }
     }
 }
