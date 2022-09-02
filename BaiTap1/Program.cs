@@ -9,30 +9,46 @@ namespace BaiTap1
         {
             var doThi = new DoThi();
             await doThi.DocFileAsync("../../../input.txt");
-            //Cau1a(doThi);
-            //Cau1e(doThi);
-            //Cau1f(doThi);
-            //Cau1g(doThi);
+            Cau1a(doThi);
+            Cau1b(doThi);
+            Cau1c(doThi);
+            Cau1d(doThi);
+            Cau1e(doThi);
+            Cau1f(doThi);
+            Cau1g(doThi);
+            Cau1h(doThi);
+            Cau2a(doThi);
+            Cau2b(doThi);
             Cau2c(doThi);
             Console.ReadKey();
         }
         
         static void Cau1a(DoThi doThi)
         {
-            //code
-            //doThi.InMaTran();
+            doThi.InMaTran();
         }
         static void Cau1b(DoThi doThi)
         {
-            //Code
+            if(doThi.KiemTraMaTranDoiXung() == true)
+                Console.WriteLine("Do Thi Vo Huong");
+            else
+                 Console.WriteLine("Do Thi Co Huong");
         }
         static void Cau1c(DoThi doThi)
         {
-            //Code
+            //int soDinhCuaDoThi = doThi.soDinh + doThi.DemSoLuongDinhCoLapDoThiCoHuong() + doThi.DemSoLuongDinhTreo();
+            //Console.WriteLine("So luong dinh co lap: {0}", doThi.DemSoLuongDinhCoLapDoThiCoHuong());
+            //Console.WriteLine("So luong dinh treo: {0}", doThi.DemSoLuongDinhTreo());
+
+            Console.WriteLine("So dinh cua do thi ke ca dinh dac biet: {0}",doThi.soDinh);
         }
         static void Cau1d(DoThi doThi)
         {
-            //Code
+            //Console.WriteLine("So luong canh boi: {0}", doThi.DemSoLuongCanhBoi());
+            //Console.WriteLine("So luong canh khuyen : {0}", doThi.DemSoLuongCanhKhuyen());
+            //Console.WriteLine("So luong canh lien thuoc : {0}", doThi.DemSoLuongCanhLienThuoc());
+            int soCanhCuaDoThi = doThi.DemSoLuongCanhBoi() + doThi.DemSoLuongCanhKhuyen() + doThi.DemSoLuongCanhLienThuoc();
+            Console.WriteLine("So canh cua do thi ke ca canh dac biet: {0}", soCanhCuaDoThi);
         }
         static void Cau1e(DoThi doThi)
         {
@@ -62,7 +78,7 @@ namespace BaiTap1
                     if (item == 1)
                         soDinhCoLap++;
                 }
-                soDinhCoLap = doThi.DemSoLuongDinhCoLap();
+                soDinhCoLap = doThi.DemSoLuongDinhCoLapDoThiVoHuong();
             }
             else
             {
@@ -151,7 +167,7 @@ namespace BaiTap1
         }
         static void Cau2a(DoThi doThi)
         {
-            //Code
+                Console.WriteLine(doThi.KiemTraDoThiDayDu());
         }
         static void Cau2b(DoThi doThi)
         {

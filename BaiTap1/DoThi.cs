@@ -42,7 +42,7 @@ namespace BaiTap1
             int i, j;
             for (i = 0; i < soDinh && result; i++)
             {
-                for (j = i + 1; (j < soDinh) && (maTran[i, j] == maTran[j, i]); j++);
+                for (j = i + 1; (j < soDinh) && (maTran[i, j] == maTran[j, i]); j++) ;
                 if (j < soDinh)
                     result = false;
             }
@@ -58,10 +58,10 @@ namespace BaiTap1
         public int[] TinhBacCacDinhVoHuong()
         {
             int[] bacCuaCacDinh = new int[soDinh];
-            for(var i = 0; i < soDinh; i++)
+            for (var i = 0; i < soDinh; i++)
             {
                 int dem = 0;
-                for(var j = 0; j < soDinh; j++)
+                for (var j = 0; j < soDinh; j++)
                 {
                     if (maTran[i, j] != 0)
                     {
@@ -69,7 +69,7 @@ namespace BaiTap1
                         if (i == j)
                             dem += maTran[i, j];
                     }
-                        
+
                 }
                 bacCuaCacDinh[i] = dem;
             }
@@ -82,23 +82,23 @@ namespace BaiTap1
             {
                 int bacRa = 0;
                 int bacVao = 0;
-                for(var j = 0; j < soDinh; j++)
+                for (var j = 0; j < soDinh; j++)
                 {
                     if (maTran[i, j] > 0)
-                        bacRa ++;
-                        if (maTran[j, i] > 0)
-                            bacVao++;
+                        bacRa++;
+                    if (maTran[j, i] > 0)
+                        bacVao++;
                 }
                 bacCuaCacDinh[i, 1] = bacRa;
                 bacCuaCacDinh[i, 0] = bacVao;
             }
             return bacCuaCacDinh;
         }
-        public int DemSoLuongDinhCoLap()
+        public int DemSoLuongDinhCoLapDoThiVoHuong()
         {
             var danhSachBacCacDinh = TinhBacCacDinhVoHuong();
             var dem = 0;
-            foreach(var item in danhSachBacCacDinh)
+            foreach (var item in danhSachBacCacDinh)
             {
                 if (item == 0)
                     dem++;
@@ -115,6 +115,115 @@ namespace BaiTap1
                 }
                 Console.Write("\n");
             }
+        }
+
+        // Kay
+        public int DemSoLuongDinhTreo()
+        {
+            var danhSachBacCacDinh = TinhBacCacDinhVoHuong();
+            var dem = 0;
+            foreach (var item in danhSachBacCacDinh)
+            {
+                if (item == 1)
+                    dem++;
+            }
+            return dem;
+        }
+
+        public int DemSoLuongDinhCoLapDoThiCoHuong()
+        {
+            var bacCuaCacDinh = TinhBacCacDinhCoHuong();
+            var dem = 0;
+            for (var i = 0; i < soDinh; i++)
+            {
+                //sConsole.WriteLine(bacCuaCacDinh[i, 0] + bacCuaCacDinh[i, 1]);
+                if (bacCuaCacDinh[i, 0] + bacCuaCacDinh[i, 1] == 1)
+                {
+                    dem++;
+                }
+            }
+            return dem;
+        }
+
+        public int DemSoLuongCanhKhuyen()
+        {
+            var soCanhKhuyen = 0;
+            for (var i = 0; i < soDinh; i++)
+            {
+                if (maTran[i, i] == 1)
+                    soCanhKhuyen++;
+            }
+            return soCanhKhuyen;
+
+        }
+
+
+        public int DemSoLuongCanhBoi() // do thi vo huong
+        {
+            var soCanhBoi = 0;
+            for (var i = 0; i < soDinh; i++)
+            {
+                for (var j = 0; j < soDinh; j++)
+                {
+                    if ((maTran[i, j] > 1) && (i != j) && (maTran[i, j] == maTran[j, i]))
+                        soCanhBoi++;
+                }
+
+            }
+            return soCanhBoi;
+
+        }
+
+        public int DemSoLuongCanhLienThuoc() // do thi vo huong
+        {
+            var soCanhLienThuoc = 0;
+            var tongCanh = 0;
+            var canhTrung = 0;
+            for (var i = 0; i < soDinh; i++)
+            {
+                for (var j = 0; j < soDinh; j++)
+                {
+                    if (maTran[i, j] != 0)
+                    {
+                        tongCanh++;
+                    }
+                    if (maTran[i, j] ==1 && maTran[i, j] == maTran[j, i] && i != j)
+                    {
+                        canhTrung++;
+                    }
+                }
+
+
+                soCanhLienThuoc = tongCanh - canhTrung/2 - DemSoLuongCanhBoi() - DemSoLuongCanhKhuyen();
+            }
+            return soCanhLienThuoc;
+        }
+
+        public String KiemTraDoThiDayDu()
+        {
+            int i, j;
+            var canhKhuyen = 0;
+            var dem = 0;
+            for (i = 0; i < soDinh; i++)
+            {
+                if (maTran[i,i]==0)
+                {
+                    canhKhuyen++;
+                }
+            }
+            for (i = 0; i < soDinh; i++)
+            {
+                for (j = 0; j < soDinh; j++)
+                {
+                    if (maTran[i, j] == maTran[j, i] && maTran[i, j] == 1)
+                        dem++;
+                }
+            }
+            if ((soDinh * soDinh - canhKhuyen) == dem)
+            {
+                return "Day la Do Thi Day Du: K"+ canhKhuyen;
+            }
+            return "Day khong phai la do thi day du";
         }
     }
 }
