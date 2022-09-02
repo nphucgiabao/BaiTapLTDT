@@ -17,9 +17,9 @@ namespace BaiTap1
             Cau1f(doThi);
             Cau1g(doThi);
             Cau1h(doThi);
-            Cau2a(doThi);
-            Cau2b(doThi);
-            Cau2c(doThi);
+            //Cau2a(doThi);
+            //Cau2b(doThi);
+            //Cau2c(doThi);
             Console.ReadKey();
         }
         
@@ -58,11 +58,27 @@ namespace BaiTap1
             {
                 if (doThi.maTran[i, i] > 0)
                     soCanhKhuyen++;
-                for(var j = i + 1; j < doThi.soDinh; j++)
+                if (doThi.KiemTraMaTranDoiXung())
                 {
-                    if (doThi.maTran[i, j] == doThi.maTran[j, j])
-                        soCapDinhXuatHienCanhBoi++;
+                    for (var j = 0; j < doThi.soDinh; j++)
+                    {
+                        if (doThi.maTran[i, j] > 1 && doThi.maTran[j, i] > 1)
+                        {
+                            soCapDinhXuatHienCanhBoi++;
+                        }
+                    }
                 }
+                else
+                {
+                    for (var j = 0; j < doThi.soDinh; j++)
+                    {
+                        if (doThi.maTran[i, j] > 0 && j != i && doThi.maTran[j, i] == doThi.maTran[i, j])
+                        {
+                            soCapDinhXuatHienCanhBoi++;
+                        }
+                    }
+                }
+                
             }
             Console.WriteLine("So cap dinh xuat hien canh boi: {0}", soCapDinhXuatHienCanhBoi > 0 ? soCapDinhXuatHienCanhBoi / 2 : 0);
             Console.WriteLine("So canh khuyen: {0}", soCanhKhuyen);
@@ -76,9 +92,10 @@ namespace BaiTap1
                 foreach(var item in doThi.TinhBacCacDinhVoHuong())
                 {
                     if (item == 1)
+                        soDinhTreo++;
+                    if (item == 0)
                         soDinhCoLap++;
-                }
-                soDinhCoLap = doThi.DemSoLuongDinhCoLapDoThiVoHuong();
+                }                
             }
             else
             {
@@ -133,10 +150,12 @@ namespace BaiTap1
                 int soCapDinhXuatHienCanhBoi = 0;
                 for (var i = 0; i < doThi.soDinh; i++)
                 {
-                    for (var j = i + 1; j < doThi.soDinh; j++)
+                    for (var j = 0; j < doThi.soDinh; j++)
                     {
-                        if (doThi.maTran[i, j] == doThi.maTran[j, j])
+                        if (doThi.maTran[i, j] > 1 && doThi.maTran[j, i] > 1)
+                        {
                             soCapDinhXuatHienCanhBoi++;
+                        }
                     }
                 }
                 if (soCapDinhXuatHienCanhBoi > 0)
@@ -150,11 +169,13 @@ namespace BaiTap1
             {
                 int soCapDinhXuatHienCanhBoi = 0;              
                 for (var i = 0; i < doThi.soDinh; i++)
-                {                   
-                    for (var j = i + 1; j < doThi.soDinh; j++)
+                {
+                    for (var j = i; j < doThi.soDinh; j++)
                     {
-                        if (doThi.maTran[i, j] == doThi.maTran[j, j])
+                        if (doThi.maTran[i, j] > 0 && j != i && doThi.maTran[j, i] == doThi.maTran[i, j])
+                        {
                             soCapDinhXuatHienCanhBoi++;
+                        }
                     }
                 }
                 if (soCapDinhXuatHienCanhBoi > 0)
